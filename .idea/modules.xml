@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/InkSpannableLibraryProject.iml" filepath="$PROJECT_DIR$/InkSpannableLibraryProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inkspannable/inkspannable.iml" filepath="$PROJECT_DIR$/inkspannable/inkspannable.iml" />
+    </modules>
+  </component>
+</project>

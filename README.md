@@ -1,0 +1,2 @@
+# InkSpannable
+Better spannable creation.
