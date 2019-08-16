@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#008577</color>
+	<color name="colorPrimaryDark">#00574B</color>
+	<color name="colorAccent">#D81B60</color>
+	<!-- Basic colors -->
+	<color name="basic_grey_light">#DDD</color>
+	<color name="basic_grey">#AAAAAA</color>
+	<color name="basic_red">#F00</color>
+	<color name="basic_red_dark">#A00</color>
+	<color name="basic_pink">#F0F</color>
+	<color name="basic_green">#0F0</color>
+	<color name="basic_cyan">#0FF</color>
+	<color name="basic_blue">#00F</color>
+	<color name="basic_yellow">#FF0</color>
+	<color name="basic_black">#000</color>
+	<color name="basic_white">#ffffff</color>
+	<color name="basic_orange">#FFA500</color>
+	<color name="transparent">#0000</color>
+	<color name="none">#0000</color>
+</resources>

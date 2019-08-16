@@ -1,0 +1,12 @@
+<resources>
+	<string name="app_name">InkSpannableLibraryProject</string>
+
+	<string name="long_text_1">We define some words to bold on an array in Strings.xml, like this one or this other one</string>
+
+	<string-array name="long_text_1_bold">
+		<item>Strings.xml</item>
+		<item>this one</item>
+		<item>this other one</item>
+	</string-array>
+
+</resources>
