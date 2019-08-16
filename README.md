@@ -37,28 +37,28 @@ Then you can create an InkSpannable with some text or empty, and modify it. It h
 Build some long text:
 ```kt
 textview.text = InkSpannableBuilder().addText("long")
-						.addBlank().addTextItalic("long")
-						.addBlank().addTextBoldItalic("complex")
-						.addBlank().addTextColor("text", getColorCompat(R.color.basic_red))
-						.addBlank().addTextColor("I", getColorCompat(R.color.basic_green))
-						.addBlank().addTextColor("am", getColorCompat(R.color.basic_blue))
-						.addBlank().addTextUnderline("testing")
-						.build()
+		.addBlank().addTextItalic("long")
+		.addBlank().addTextBoldItalic("complex")
+		.addBlank().addTextColor("text", getColorCompat(R.color.basic_red))
+		.addBlank().addTextColor("I", getColorCompat(R.color.basic_green))
+		.addBlank().addTextColor("am", getColorCompat(R.color.basic_blue))
+		.addBlank().addTextUnderline("testing")
+		.build()
 ```
 
 Create with text and then modify it:
 ```kt
 textview.text = InkSpannableBuilder(R.string.long_text_1)
-			.boldText(AppCtrl.instance.resources.getStringArray(R.array.long_text_1_bold).toList())
+		.boldText(AppCtrl.instance.resources.getStringArray(R.array.long_text_1_bold).toList())
 ```
 
 With resources from strings.xml:
 ```xml
-	<string name="long_text_1">We define some words to bold on an array in Strings.xml, like this one or this other one</string>
+<string name="long_text_1">We define some words to bold on an array in Strings.xml, like this one or this other one</string>
 
-	<string-array name="long_text_1_bold">
-		<item>Strings.xml</item>
-		<item>this one</item>
-		<item>this other one</item>
-	</string-array>
+<string-array name="long_text_1_bold">
+	<item>Strings.xml</item>
+	<item>this one</item>
+	<item>this other one</item>
+</string-array>
 ```
