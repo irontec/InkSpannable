@@ -9,6 +9,9 @@ data class TextSpanMod(
 		val strike: Boolean? = null,
 		val superScript: Boolean? = null,
 		val color: Int? = null,
+		val absoluteSize: Int? = null,
+		val absoluteSizeDip: Boolean? = null,
+		val relativeSize: Float? = null,
 		val onClick: ((item: View?) -> Any)? = null
 ) {
 	enum class TextStyles {

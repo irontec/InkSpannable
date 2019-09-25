@@ -8,18 +8,17 @@ import android.text.TextPaint
 import android.text.style.*
 import android.util.Log
 import android.view.View
-import com.inlacou.inkspannable.round.RoundedBackgroundSpan
-import kotlin.math.round
 
-fun Spannable.applyMod(mod: TextSpanMod, from: Int = 0, to: Int = length): Spannable {
-    Log.d("applyMod", "$from-$to: ${this.toString().substring(from, to)}")
-    mod.typeface?.let { applyTypeface(it, from, to) }
-    mod.onClick?.let { applyClickable(it, from, to) }
-    mod.color?.let { applyColor(it, from, to) }
-    mod.underline?.let { applyUnderline(it, from, to) }
-    mod.round?.let { applyRounded(it, from, to) }
-    mod.superScript?.let { applySuperScript(it, from, to) }
-    mod.strike?.let { applyStrike(it, from, to) }
+fun Spannable.applyMod(modifier: TextSpanMod, from: Int = 0, to: Int = length): Spannable {
+    modifier.typeface?.let { applyTypeface(it, from, to) }
+    modifier.onClick?.let { applyClickable(it, from, to) }
+    modifier.color?.let { applyColor(it, from, to) }
+    modifier.underline?.let { applyUnderline(it, from, to) }
+    modifier.round?.let { applyRounded(it, from, to) }
+    modifier.superScript?.let { applySuperScript(it, from, to) }
+    modifier.relativeSize?.let { applyRelativeSize(it, from, to) }
+    modifier.absoluteSize?.let { applyAbsoluteSize(it, modifier.absoluteSizeDip ?: true, from, to) }
+    modifier.strike?.let { applyStrike(it, from, to) }
     return this
 }
 
@@ -54,12 +53,14 @@ fun Spannable.applySuperScript(strike: Boolean, from: Int = 0, to: Int = length)
     return this
 }
 
-fun Spannable.applyAbsoluteSize(strike: Boolean, size: Int, dip: Boolean, from: Int = 0, to: Int = length): Spannable {
-    if(strike) setSpan(AbsoluteSizeSpan(size, dip), from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-    else getSpans(from, to, SuperscriptSpan::class.java).forEach { removeSpan(it) }
+fun Spannable.applyAbsoluteSize(size: Int, dip: Boolean = true, from: Int = 0, to: Int = length): Spannable {
+    setSpan(AbsoluteSizeSpan(size, dip), from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     return this
 }
 
+/**
+ * @param size 1.5f would make the size increase to 150%, 0.5f would make it 50%.
+ */
 fun Spannable.applyRelativeSize(size: Float, from: Int = 0, to: Int = length): Spannable {
     setSpan(RelativeSizeSpan(size), from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     return this

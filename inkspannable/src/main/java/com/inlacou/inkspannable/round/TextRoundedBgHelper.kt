@@ -82,7 +82,6 @@ class TextRoundedBgHelper(
 		// ideally the calculations here should be cached since they are not cheap. However, proper
 		// invalidation of the cache is required whenever anything related to text has changed.
 		val spans = text.getSpans(0, text.length, Annotation::class.java)
-		Log.d("INLACOUUU", "spans: ${spans.map { it.value }}")
 		spans.forEach { span ->
 			if (span.value=="rounded") {
 				val spanStart = text.getSpanStart(span)

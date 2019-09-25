@@ -78,16 +78,18 @@ class MainActivity : AppCompatActivity() {
 						.boldText(resources.getStringArray(R.array.long_text_1_bold).toList())
 						.build()
 			})
-			addView(TextView(context).apply {
+			addView(RoundedBgTextView(context).apply {
 				Timber.d("prebuild2: $theSameButPreBuilt2")
 				text = theSameButPreBuilt2.addBlank().addText("(other way)").addBlank().addTextRound("prueba").build()
 			})
 			addView(RoundedBgTextView(context).apply {
-				text = InkSpannableBuilder("round strike superscript")
+				text = InkSpannableBuilder("absoluteSize relativeSize round strike superscript absoluteSize relativeSize")
 						.roundText(textToRound = "round")
 						.strikeText(textToStrike = "strike")
 						.superScriptText(textToSuperScript = "superscript")
 						.superScriptText(textToSuperScript = "script")
+						.absoluteSizeText(24, true, "absoluteSize")
+						.relativeSizeText(2f, "relativeSize")
 						.build()
 			})
 		}

@@ -57,13 +57,7 @@ class InkSpannableBuilder(private val allText: String) {
 	}
 	
 	private fun realAddTextMod(string: String, modifier: TextSpanMod, builder: SpannableStringBuilder): InkSpannableBuilder {
-		val spannedString = SpannableString(string)
-		modifier.typeface?.let { spannedString.applyTypeface(it, 0, string.length) }
-		modifier.onClick?.let { spannedString.applyClickable(it, 0, string.length) }
-		modifier.color?.let { spannedString.applyColor(it, 0, string.length) }
-		modifier.underline?.let { spannedString.applyUnderline(it, 0, string.length) }
-		modifier.round?.let { spannedString.applyRounded(it, 0, string.length) }
-		builder.append(spannedString)
+		builder.append(SpannableString(string).applyMod(modifier))
 		return this
 	}
 	/// From Secuential
@@ -117,6 +111,20 @@ class InkSpannableBuilder(private val allText: String) {
 	fun roundText(round: Boolean = true, vararg toRoundResIds: Int): InkSpannableBuilder = roundText(round, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun roundText(round: Boolean = true, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(round = round), toRoundText)
 	
+	fun relativeSizeText(relativeSize: Float, textToRound: String): InkSpannableBuilder = relativeSizeText(relativeSize, listOf(textToRound))
+	fun relativeSizeText(relativeSize: Float, vararg toRoundText: String): InkSpannableBuilder = relativeSizeText(relativeSize, toRoundText.toList())
+	fun relativeSizeText(relativeSize: Float, toRoundTextResId: Int): InkSpannableBuilder = relativeSizeText(relativeSize, InkSpannableConfig.instance.getString(toRoundTextResId))
+	fun relativeSizeText(relativeSize: Float, toRoundResIds: Array<Int>): InkSpannableBuilder = relativeSizeText(relativeSize, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun relativeSizeText(relativeSize: Float, vararg toRoundResIds: Int): InkSpannableBuilder = relativeSizeText(relativeSize, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun relativeSizeText(relativeSize: Float, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(relativeSize = relativeSize), toRoundText)
+	
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, textToRound: String): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, listOf(textToRound))
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, vararg toRoundText: String): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toRoundText.toList())
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toRoundTextResId: Int): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, InkSpannableConfig.instance.getString(toRoundTextResId))
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toRoundResIds: Array<Int>): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, vararg toRoundResIds: Int): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(absoluteSize = absoluteSize, absoluteSizeDip = dip), toRoundText)
+	
 	fun colorText(color: Int, textToColor: String): InkSpannableBuilder = colorText(color, listOf(textToColor))
 	fun colorText(color: Int, vararg toColorText: String): InkSpannableBuilder = colorText(color, toColorText.toList())
 	fun colorText(color: Int, toColorTextResId: Int): InkSpannableBuilder = colorText(color, InkSpannableConfig.instance.getString(toColorTextResId))
@@ -158,14 +166,24 @@ class InkSpannableBuilder(private val allText: String) {
 		return this
 	}
 	
+	private fun CharSequence.indexesOf(string: String, startIndex: Int = 0, ignoreCase: Boolean = false): List<Int> {
+		val indexes = mutableListOf<Int>()
+		var lastIndex = indexOf(string, startIndex, ignoreCase)
+		while (lastIndex!=-1) {
+			indexes.add(lastIndex)
+			lastIndex = indexOf(string, lastIndex+1, ignoreCase)
+		}
+		
+		return indexes
+	}
+	
 	private fun realModText(mod: TextSpanMod, toModText: List<String>, builder: SpannableStringBuilder): InkSpannableBuilder {
 		toModText.forEach { textToMod ->
 			if (!allText.contains(textToMod)) return@forEach
 			
-			val start = allText.indexOf(textToMod)
-			val end = start + textToMod.length
-			
-			builder.applyMod(mod, start, end)
+			allText.indexesOf(textToMod).map { Pair(it, it+textToMod.length) }.forEach {
+				builder.applyMod(mod, it.first, it.second)
+			}
 		}
 		return this
 	}

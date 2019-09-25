@@ -76,7 +76,7 @@ fun Layout.getLineTopWithoutPadding(line: Int): Int {
 	if (line == 0) {
 		lineTop -= topPadding
 	}
-	return lineTop
+	return lineTop+3
 }
 
 /**
@@ -87,5 +87,5 @@ fun Layout.getLineBottomWithoutPadding(line: Int): Int {
 	if (line == lineCount - 1) {
 		lineBottom -= bottomPadding
 	}
-	return lineBottom
+	return lineBottom-7
 }
