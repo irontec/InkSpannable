@@ -82,6 +82,14 @@ class MainActivity : AppCompatActivity() {
 				Timber.d("prebuild2: $theSameButPreBuilt2")
 				text = theSameButPreBuilt2.addBlank().addText("(other way)").addBlank().addTextRound("prueba").build()
 			})
+			addView(RoundedBgTextView(context).apply {
+				text = InkSpannableBuilder("round strike superscript")
+						.roundText(textToRound = "round")
+						.strikeText(textToStrike = "strike")
+						.superScriptText(textToSuperScript = "superscript")
+						.superScriptText(textToSuperScript = "script")
+						.build()
+			})
 		}
 	}
 	

@@ -6,6 +6,8 @@ data class TextSpanMod(
 		val typeface: TextStyles? = null,
 		val underline: Boolean? = null,
 		val round: Boolean? = null,
+		val strike: Boolean? = null,
+		val superScript: Boolean? = null,
 		val color: Int? = null,
 		val onClick: ((item: View?) -> Any)? = null
 ) {
