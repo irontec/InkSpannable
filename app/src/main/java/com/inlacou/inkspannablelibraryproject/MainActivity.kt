@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.inlacou.inkspannable.InkSpannableBuilder
+import com.inlacou.inkspannable.round.RoundedBgTextView
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -53,11 +54,12 @@ class MainActivity : AppCompatActivity() {
 			addView(TextView(context).apply {
 				text = InkSpannableBuilder().addText("normal").addBlank().addTextBoldItalic("bolditalic").addBlank().addText("(other way)").build()
 			})
-			addView(TextView(context).apply {
+			addView(RoundedBgTextView(context).apply {
 				text = InkSpannableBuilder("normal text text to bold text to red clickable text")
 						.boldText("text to bold")
 						.colorText(getColorCompat(R.color.basic_red), "text to red")
 						.colorText(getColorCompat(R.color.basic_blue), "bold text")
+						.roundText(true, "to red")
 						.clickableText({
 							Toast.makeText(this@MainActivity, "clicked!", Toast.LENGTH_SHORT).show()
 						}, "clickable text")
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 			})
 			addView(TextView(context).apply {
 				Timber.d("prebuild2: $theSameButPreBuilt2")
-				text = theSameButPreBuilt2.addBlank().addText("(other way)").build()
+				text = theSameButPreBuilt2.addBlank().addText("(other way)").addBlank().addTextRound("prueba").build()
 			})
 		}
 	}

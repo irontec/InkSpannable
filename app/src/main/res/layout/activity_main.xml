@@ -10,6 +10,13 @@
 		android:id="@+id/ll"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		app:layout_constraintTop_toTopOf="parent"
 		android:orientation="vertical"/>
+
+	<com.inlacou.inkspannable.round.RoundedBgTextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/rounded"
+		app:layout_constraintTop_toBottomOf="@+id/ll"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

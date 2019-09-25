@@ -3,6 +3,7 @@ package com.inlacou.inkspannable
 import android.content.Context
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.View
 
 /**
@@ -20,6 +21,8 @@ class InkSpannableBuilder(private val allText: String) {
 	fun addText(stringResId: Int) = addTextMod(InkSpannableConfig.instance.getString(stringResId), TextSpanMod())
 	
 	fun addText(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod())
+	fun addTextRound(string: String) = addTextMod(string, TextSpanMod(round = true))
+	fun addTextRound(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(round = true))
 	fun addTextColor(string: String, color: Int) = addTextMod(string, TextSpanMod(color = color))
 	fun addTextColor(context: Context, resId: Int, color: Int) = addTextMod(context.getString(resId), TextSpanMod(color = color))
 	fun addTextBold(stringResId: Int): InkSpannableBuilder = addTextMod(InkSpannableConfig.instance.getString(stringResId), TextSpanMod(typeface = TextSpanMod.TextStyles.BOLD))
@@ -55,6 +58,7 @@ class InkSpannableBuilder(private val allText: String) {
 		modifier.onClick?.let { spannedString.applyClickable(it, 0, string.length) }
 		modifier.color?.let { spannedString.applyColor(it, 0, string.length) }
 		modifier.underline?.let { spannedString.applyUnderline(it, 0, string.length) }
+		modifier.round?.let { spannedString.applyRounded(it, 0, string.length) }
 		builder.append(spannedString)
 		return this
 	}
@@ -87,6 +91,13 @@ class InkSpannableBuilder(private val allText: String) {
 	fun underlineText(underline: Boolean = true, toUnderlineResIds: Array<Int>): InkSpannableBuilder = underlineText(underline, toUnderlineResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun underlineText(underline: Boolean = true, vararg toUnderlineResIds: Int): InkSpannableBuilder = underlineText(underline, toUnderlineResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun underlineText(underline: Boolean = true, toUnderlineText: List<String>): InkSpannableBuilder = modText(TextSpanMod(underline = underline), toUnderlineText)
+	
+	fun roundText(underline: Boolean = true, textToUnderline: String): InkSpannableBuilder = roundText(underline, listOf(textToUnderline))
+	/*fun roundText(underline: Boolean = true, vararg toUnderlineText: String): InkSpannableBuilder = underlineText(underline, toUnderlineText.toList())
+	fun roundText(underline: Boolean = true, toUnderlineTextResId: Int): InkSpannableBuilder = underlineText(underline, InkSpannableConfig.instance.getString(toUnderlineTextResId))
+	fun roundText(underline: Boolean = true, toUnderlineResIds: Array<Int>): InkSpannableBuilder = underlineText(underline, toUnderlineResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun roundText(underline: Boolean = true, vararg toUnderlineResIds: Int): InkSpannableBuilder = underlineText(underline, toUnderlineResIds.map { InkSpannableConfig.instance.getString(it) })
+	*/fun roundText(round: Boolean = true, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(round = round), toRoundText)
 	
 	fun colorText(color: Int, textToColor: String): InkSpannableBuilder = colorText(color, listOf(textToColor))
 	fun colorText(color: Int, vararg toColorText: String): InkSpannableBuilder = colorText(color, toColorText.toList())
@@ -150,7 +161,7 @@ class InkSpannableBuilder(private val allText: String) {
 	fun build(): SpannableStringBuilder {
 		val builder = SpannableStringBuilder(allText)
 		actions.forEach {
-			if (it.type == Type.ADD) {
+			if (it.type==Type.ADD) {
 				realAddTextMod(it.toModText, it.mod, builder)
 			} else {
 				realModText(it.mod, it.toModText, builder)

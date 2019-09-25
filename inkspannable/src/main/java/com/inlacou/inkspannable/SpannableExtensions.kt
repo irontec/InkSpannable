@@ -1,17 +1,23 @@
 package com.inlacou.inkspannable
 
 import android.graphics.Typeface
+import android.text.Annotation
 import android.text.Spannable
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.*
+import android.util.Log
 import android.view.View
+import com.inlacou.inkspannable.round.RoundedBackgroundSpan
+import kotlin.math.round
 
 fun Spannable.applyMod(mod: TextSpanMod, from: Int = 0, to: Int = length): Spannable {
+    Log.d("applyMod", "$from-$to: ${this.toString().substring(from, to)}")
     mod.typeface?.let { applyTypeface(it, from, to) }
     mod.onClick?.let { applyClickable(it, from, to) }
     mod.color?.let { applyColor(it, from, to) }
     mod.underline?.let { applyUnderline(it, from, to) }
+    mod.round?.let { applyRounded(it, from, to) }
     return this
 }
 
@@ -31,6 +37,12 @@ fun Spannable.applyUnderline(underline: Boolean, from: Int = 0, to: Int = length
             ds.isUnderlineText = underline
         }
     }, from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    return this
+}
+
+fun Spannable.applyRounded(rounded: Boolean, from: Int = 0, to: Int = length): Spannable {
+    if(rounded) setSpan(Annotation("rounded", "rounded"), from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    else getSpans(from, to, Annotation::class.java).filter { it.key == "rounded" }.forEach { removeSpan(it) }
     return this
 }
 

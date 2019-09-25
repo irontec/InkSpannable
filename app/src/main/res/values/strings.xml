@@ -9,4 +9,6 @@
 		<item>this other one</item>
 	</string-array>
 
+	<string name="rounded">We define some words to <annotation key="rounded">bold</annotation> on an array in Strings.xml, like this one or this other one</string>
+
 </resources>
