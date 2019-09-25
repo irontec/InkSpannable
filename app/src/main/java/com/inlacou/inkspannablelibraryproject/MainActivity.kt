@@ -6,10 +6,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.text.style.DynamicDrawableSpan
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.inlacou.inkspannable.InkSpannableBuilder
+import com.inlacou.inkspannable.*
 import com.inlacou.inkspannable.round.RoundedBgTextView
 import timber.log.Timber
 
@@ -90,6 +92,17 @@ class MainActivity : AppCompatActivity() {
 						.superScriptText(textToSuperScript = "script")
 						.absoluteSizeText(24, true, "absoluteSize")
 						.relativeSizeText(2f, "relativeSize")
+						.build()
+			})
+			addView(RoundedBgTextView(context).apply {
+				text = InkSpannableBuilder("some text bla blastrike superscript round drawable some more text justo to make it multiple lines bla bla bla\nnew paragraph la la\nanother new one")
+						.roundText(textToRound = "round")
+						.strikeText(textToStrike = "strike")
+						.superScriptText(textToSuperScript = "superscript")
+						.superScriptText(textToSuperScript = "script")
+						.bulletParagraph(getColorCompat(R.color.basic_red), 10, "new paragraph")
+						.quoteParagraph(getColorCompat(R.color.basic_red), "another new")
+						.drawable(R.drawable.space_invader, 16.dpToPx(), 16.dpToPx(), "drawable")
 						.build()
 			})
 		}

@@ -22,7 +22,7 @@ import androidx.core.graphics.withTranslation
 import com.inlacou.inkspannable.ExtensibleTextView
 
 /**
- * A TextView that can draw rounded background to the portions of the text. See
+ * A TextView that can drawable rounded background to the portions of the text. See
  * [TextRoundedBgHelper] for more information.
  *
  * See [TextRoundedBgAttributeReader] for supported attributes.

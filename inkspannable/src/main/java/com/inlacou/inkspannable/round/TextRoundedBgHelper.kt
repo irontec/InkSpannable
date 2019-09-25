@@ -24,7 +24,7 @@ import android.text.style.BackgroundColorSpan
 import android.util.Log
 
 /**
- * Helper class to draw multi-line rounded background to certain parts of a text. The start/end
+ * Helper class to drawable multi-line rounded background to certain parts of a text. The start/end
  * positions of the backgrounds are annotated with [android.text.Annotation] class. Each annotation
  * should have the annotation key set to **rounded**.
  *
@@ -39,10 +39,10 @@ import android.util.Log
  *
  * @param horizontalPadding the padding to be applied to left & right of the background
  * @param verticalPadding the padding to be applied to top & bottom of the background
- * @param drawable the drawable used to draw the background
- * @param drawableLeft the drawable used to draw left edge of the background
- * @param drawableMid the drawable used to draw for whole line
- * @param drawableRight the drawable used to draw right edge of the background
+ * @param drawable the drawable used to drawable the background
+ * @param drawableLeft the drawable used to drawable left edge of the background
+ * @param drawableMid the drawable used to drawable for whole line
+ * @param drawableRight the drawable used to drawable right edge of the background
  */
 class TextRoundedBgHelper(
 		val horizontalPadding: Int,
@@ -74,7 +74,7 @@ class TextRoundedBgHelper(
 	/**
 	 * Call this function during onDraw of another widget such as TextView.
 	 *
-	 * @param canvas Canvas to draw onto
+	 * @param canvas Canvas to drawable onto
 	 * @param text Spanned
 	 * @param layout Layout that contains the text
 	 */

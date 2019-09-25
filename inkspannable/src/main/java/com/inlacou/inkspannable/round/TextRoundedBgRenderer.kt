@@ -35,7 +35,7 @@ internal abstract class TextRoundedBgRenderer(
 	/**
 	 * Draw the background that starts at the {@code startOffset} and ends at {@code endOffset}.
 	 *
-	 * @param canvas Canvas to draw onto
+	 * @param canvas Canvas to drawable onto
 	 * @param layout Layout that contains the text
 	 * @param startLine the start line for the background
 	 * @param endLine the end line for the background
@@ -79,7 +79,7 @@ internal abstract class TextRoundedBgRenderer(
  *
  * @param horizontalPadding the padding to be applied to left & right of the background
  * @param verticalPadding the padding to be applied to top & bottom of the background
- * @param drawable the drawable used to draw the background
+ * @param drawable the drawable used to drawable the background
  */
 internal class SingleLineRenderer(
 		horizontalPadding: Int,
@@ -111,9 +111,9 @@ internal class SingleLineRenderer(
  *
  * @param horizontalPadding the padding to be applied to left & right of the background
  * @param verticalPadding the padding to be applied to top & bottom of the background
- * @param drawableLeft the drawable used to draw left edge of the background
- * @param drawableMid the drawable used to draw for whole line
- * @param drawableRight the drawable used to draw right edge of the background
+ * @param drawableLeft the drawable used to drawable left edge of the background
+ * @param drawableMid the drawable used to drawable for whole line
+ * @param drawableRight the drawable used to drawable right edge of the background
  */
 internal class MultiLineRenderer(
 		horizontalPadding: Int,
@@ -131,7 +131,7 @@ internal class MultiLineRenderer(
 			startOffset: Int,
 			endOffset: Int
 	) {
-		// draw the first line
+		// drawable the first line
 		val paragDir = layout.getParagraphDirection(startLine)
 		val lineEndOffset = if (paragDir == Layout.DIR_RIGHT_TO_LEFT) {
 			layout.getLineLeft(startLine) - horizontalPadding
@@ -143,7 +143,7 @@ internal class MultiLineRenderer(
 		var lineTop = getLineTop(layout, startLine)
 		drawStart(canvas, startOffset, lineTop, lineEndOffset, lineBottom)
 		
-		// for the lines in the middle draw the mid drawable
+		// for the lines in the middle drawable the mid drawable
 		for (line in startLine + 1 until endLine) {
 			lineTop = getLineTop(layout, line)
 			lineBottom = getLineBottom(layout, line)
@@ -162,7 +162,7 @@ internal class MultiLineRenderer(
 			layout.getLineLeft(startLine) - horizontalPadding
 		}.toInt()
 		
-		// draw the last line
+		// drawable the last line
 		lineBottom = getLineBottom(layout, endLine)
 		lineTop = getLineTop(layout, endLine)
 		
@@ -172,7 +172,7 @@ internal class MultiLineRenderer(
 	/**
 	 * Draw the first line of a multiline annotation. Handles LTR/RTL.
 	 *
-	 * @param canvas Canvas to draw onto
+	 * @param canvas Canvas to drawable onto
 	 * @param start start coordinate for the background
 	 * @param top top coordinate for the background
 	 * @param end end coordinate for the background
@@ -191,7 +191,7 @@ internal class MultiLineRenderer(
 	/**
 	 * Draw the last line of a multiline annotation. Handles LTR/RTL.
 	 *
-	 * @param canvas Canvas to draw onto
+	 * @param canvas Canvas to drawable onto
 	 * @param start start coordinate for the background
 	 * @param top top position for the background
 	 * @param end end coordinate for the background

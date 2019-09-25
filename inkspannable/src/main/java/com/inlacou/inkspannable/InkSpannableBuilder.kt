@@ -1,10 +1,15 @@
 package com.inlacou.inkspannable
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
+import kotlin.text.Typography.bullet
+import kotlin.text.Typography.quote
 
 /**
  * Created by inlacou on 26/09/17.
@@ -111,19 +116,19 @@ class InkSpannableBuilder(private val allText: String) {
 	fun roundText(round: Boolean = true, vararg toRoundResIds: Int): InkSpannableBuilder = roundText(round, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun roundText(round: Boolean = true, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(round = round), toRoundText)
 	
-	fun relativeSizeText(relativeSize: Float, textToRound: String): InkSpannableBuilder = relativeSizeText(relativeSize, listOf(textToRound))
-	fun relativeSizeText(relativeSize: Float, vararg toRoundText: String): InkSpannableBuilder = relativeSizeText(relativeSize, toRoundText.toList())
-	fun relativeSizeText(relativeSize: Float, toRoundTextResId: Int): InkSpannableBuilder = relativeSizeText(relativeSize, InkSpannableConfig.instance.getString(toRoundTextResId))
-	fun relativeSizeText(relativeSize: Float, toRoundResIds: Array<Int>): InkSpannableBuilder = relativeSizeText(relativeSize, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
-	fun relativeSizeText(relativeSize: Float, vararg toRoundResIds: Int): InkSpannableBuilder = relativeSizeText(relativeSize, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
-	fun relativeSizeText(relativeSize: Float, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(relativeSize = relativeSize), toRoundText)
+	fun relativeSizeText(relativeSize: Float, textToChangeSize: String): InkSpannableBuilder = relativeSizeText(relativeSize, listOf(textToChangeSize))
+	fun relativeSizeText(relativeSize: Float, vararg toChangeSizeText: String): InkSpannableBuilder = relativeSizeText(relativeSize, toChangeSizeText.toList())
+	fun relativeSizeText(relativeSize: Float, toChangeSizeTextResId: Int): InkSpannableBuilder = relativeSizeText(relativeSize, InkSpannableConfig.instance.getString(toChangeSizeTextResId))
+	fun relativeSizeText(relativeSize: Float, toChangeSizeResIds: Array<Int>): InkSpannableBuilder = relativeSizeText(relativeSize, toChangeSizeResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun relativeSizeText(relativeSize: Float, vararg toChangeSizeResIds: Int): InkSpannableBuilder = relativeSizeText(relativeSize, toChangeSizeResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun relativeSizeText(relativeSize: Float, toChangeSizeText: List<String>): InkSpannableBuilder = modText(TextSpanMod(relativeSize = relativeSize), toChangeSizeText)
 	
-	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, textToRound: String): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, listOf(textToRound))
-	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, vararg toRoundText: String): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toRoundText.toList())
-	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toRoundTextResId: Int): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, InkSpannableConfig.instance.getString(toRoundTextResId))
-	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toRoundResIds: Array<Int>): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
-	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, vararg toRoundResIds: Int): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toRoundResIds.map { InkSpannableConfig.instance.getString(it) })
-	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toRoundText: List<String>): InkSpannableBuilder = modText(TextSpanMod(absoluteSize = absoluteSize, absoluteSizeDip = dip), toRoundText)
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, textToChangeSize: String): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, listOf(textToChangeSize))
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, vararg toChangeSizeText: String): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toChangeSizeText.toList())
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toChangeSizeTextResId: Int): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, InkSpannableConfig.instance.getString(toChangeSizeTextResId))
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toChangeSizeResIds: Array<Int>): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toChangeSizeResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, vararg toChangeSizeResIds: Int): InkSpannableBuilder = absoluteSizeText(absoluteSize, dip, toChangeSizeResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun absoluteSizeText(absoluteSize: Int, dip: Boolean = true, toChangeSizeText: List<String>): InkSpannableBuilder = modText(TextSpanMod(absoluteSize = absoluteSize, absoluteSizeDip = dip), toChangeSizeText)
 	
 	fun colorText(color: Int, textToColor: String): InkSpannableBuilder = colorText(color, listOf(textToColor))
 	fun colorText(color: Int, vararg toColorText: String): InkSpannableBuilder = colorText(color, toColorText.toList())
@@ -131,6 +136,47 @@ class InkSpannableBuilder(private val allText: String) {
 	fun colorText(color: Int, toColorResIds: Array<Int>): InkSpannableBuilder = colorText(color, toColorResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun colorText(color: Int, vararg toColorResIds: Int): InkSpannableBuilder = colorText(color, toColorResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun colorText(color: Int, toColorText: List<String>): InkSpannableBuilder = modText(TextSpanMod(color = color), toColorText)
+	
+	fun drawable(resId: Int, width: Int? = null, height: Int? = null, textToChangeForDrawable: String): InkSpannableBuilder = drawable(resId, width, height, listOf(textToChangeForDrawable))
+	fun drawable(resId: Int, width: Int? = null, height: Int? = null, vararg toChangeForDrawableText: String): InkSpannableBuilder = drawable(resId, width, height, toChangeForDrawableText.toList())
+	fun drawable(resId: Int, width: Int? = null, height: Int? = null, toChangeForDrawableTextResId: Int): InkSpannableBuilder = drawable(resId, width, height, InkSpannableConfig.instance.getString(toChangeForDrawableTextResId))
+	fun drawable(resId: Int, width: Int? = null, height: Int? = null, toChangeForDrawableResIds: Array<Int>): InkSpannableBuilder = drawable(resId, width, height, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun drawable(resId: Int, width: Int? = null, height: Int? = null, vararg toChangeForDrawableResIds: Int): InkSpannableBuilder = drawable(resId, width, height, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun drawable(resId: Int, width: Int? = null, height: Int? = null, toChangeForDrawableText: List<String>): InkSpannableBuilder = modText(TextSpanMod(drawableResId = resId, drawableWidth = width, drawableHeight = height), toChangeForDrawableText)
+	
+	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, textToChangeForDrawable: String): InkSpannableBuilder = drawable(drawable, width, height, listOf(textToChangeForDrawable))
+	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, vararg toChangeForDrawableText: String): InkSpannableBuilder = drawable(drawable, width, height, toChangeForDrawableText.toList())
+	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, toChangeForDrawableTextResId: Int): InkSpannableBuilder = drawable(drawable, width, height, InkSpannableConfig.instance.getString(toChangeForDrawableTextResId))
+	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, toChangeForDrawableResIds: Array<Int>): InkSpannableBuilder = drawable(drawable, width, height, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, vararg toChangeForDrawableResIds: Int): InkSpannableBuilder = drawable(drawable, width, height, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, toChangeForDrawableText: List<String>): InkSpannableBuilder = modText(TextSpanMod(drawable = drawable, drawableWidth = width, drawableHeight = height), toChangeForDrawableText)
+	
+	fun quoteParagraph(quoteColor: Int, textToChangeForDrawable: String): InkSpannableBuilder = quoteParagraph(quoteColor, listOf(textToChangeForDrawable))
+	fun quoteParagraph(quoteColor: Int, vararg toChangeForDrawableText: String): InkSpannableBuilder = quoteParagraph(quoteColor, toChangeForDrawableText.toList())
+	fun quoteParagraph(quoteColor: Int, toChangeForDrawableTextResId: Int): InkSpannableBuilder = quoteParagraph(quoteColor, InkSpannableConfig.instance.getString(toChangeForDrawableTextResId))
+	fun quoteParagraph(quoteColor: Int, toChangeForDrawableResIds: Array<Int>): InkSpannableBuilder = quoteParagraph(quoteColor, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun quoteParagraph(quoteColor: Int, vararg toChangeForDrawableResIds: Int): InkSpannableBuilder = quoteParagraph(quoteColor, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun quoteParagraph(quoteColor: Int, toChangeForDrawableText: List<String>): InkSpannableBuilder = modText(TextSpanMod(quoteColor = quoteColor), toChangeForDrawableText)
+	
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, textToIdentifyParagraph: String): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, bulletRadius, listOf(textToIdentifyParagraph))
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, vararg toIdentifyParagraphText: String): InkSpannableBuilder = bulletParagraph(bulletColor, bulletRadius, bulletGap, toIdentifyParagraphText.toList())
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, toIdentifyParagraphTextResId: Int): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, bulletRadius, InkSpannableConfig.instance.getString(toIdentifyParagraphTextResId))
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, toIdentifyParagraphResIds: Array<Int>): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, bulletRadius, toIdentifyParagraphResIds.map { InkSpannableConfig.instance.getString(it) })
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, vararg toIdentifyParagraphResIds: Int): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, bulletRadius, toIdentifyParagraphResIds.map { InkSpannableConfig.instance.getString(it) })
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, toIdentifyParagraphText: List<String>): InkSpannableBuilder = modText(TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap, bulletRadius = bulletRadius), toIdentifyParagraphText)
+	
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, textToIdentifyParagraph: String): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, listOf(textToIdentifyParagraph))
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, vararg toIdentifyParagraphText: String): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, toIdentifyParagraphText.toList())
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, toIdentifyParagraphTextResId: Int): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, InkSpannableConfig.instance.getString(toIdentifyParagraphTextResId))
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, toIdentifyParagraphResIds: Array<Int>): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, toIdentifyParagraphResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, vararg toIdentifyParagraphResIds: Int): InkSpannableBuilder = bulletParagraph(bulletColor, bulletGap, toIdentifyParagraphResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun bulletParagraph(bulletColor: Int, bulletGap: Int? = null, toIdentifyParagraphText: List<String>): InkSpannableBuilder = modText(TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap), toIdentifyParagraphText)
 	
 	/** Do not forget to set movementMethod = LinkMovementMethod()
 	 * This will change span color to whatever textColorLink and underline it, but you can override after it */

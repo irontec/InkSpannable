@@ -1,6 +1,7 @@
 package com.inlacou.inkspannablelibraryproject
 
 import android.app.Application
+import android.content.res.Resources
 import com.inlacou.inkspannable.InkSpannableConfig
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -36,3 +37,6 @@ class AppCtrl : Application() {
 		}
 	}
 }
+
+fun Int.dpToPx() = (this * Resources.getSystem().displayMetrics.density).toInt()
+fun Int.pxToDp() = (this / Resources.getSystem().displayMetrics.density).toInt()
