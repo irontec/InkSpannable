@@ -1,15 +1,13 @@
 package com.inlacou.inkspannable
 
 import android.content.Context
+import android.graphics.BlurMaskFilter
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
-import kotlin.text.Typography.bullet
-import kotlin.text.Typography.quote
 
 /**
  * Created by inlacou on 26/09/17.
@@ -30,6 +28,12 @@ class InkSpannableBuilder(private val allText: String) {
 	fun addTextStrike(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(strike = true))
 	fun addTextSuperScript(string: String) = addTextMod(string, TextSpanMod(superScript = true))
 	fun addTextSuperScript(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(superScript = true))
+	fun addTextSubScript(string: String) = addTextMod(string, TextSpanMod(subScript = true))
+	fun addTextSubScript(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(subScript = true))
+	/** Needs android:hardwareAccelerated="false" on your manifest */
+	fun addTextBlur(string: String, radius: Float? = null, style: BlurMaskFilter.Blur? = null) = addTextMod(string, TextSpanMod(blur = true, blurRadius = radius, blurStyle = style))
+	/** Needs android:hardwareAccelerated="false" on your manifest */
+	fun addTextBlur(context: Context, resId: Int, radius: Float? = null, style: BlurMaskFilter.Blur? = null) = addTextMod(context.getString(resId), TextSpanMod(blur = true, blurRadius = radius, blurStyle = style))
 	fun addTextRound(string: String) = addTextMod(string, TextSpanMod(round = true))
 	fun addTextRound(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(round = true))
 	fun addTextAbsoluteSize(string: String, size: Int, dip: Boolean) = addTextMod(string, TextSpanMod(absoluteSize = size, absoluteSizeDip = dip))
@@ -113,6 +117,20 @@ class InkSpannableBuilder(private val allText: String) {
 	fun superScriptText(superScript: Boolean = true, toSuperScriptResIds: Array<Int>): InkSpannableBuilder = superScriptText(superScript, toSuperScriptResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun superScriptText(superScript: Boolean = true, vararg toSuperScriptResIds: Int): InkSpannableBuilder = superScriptText(superScript, toSuperScriptResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun superScriptText(superScript: Boolean = true, toSuperScriptText: List<String>): InkSpannableBuilder = modText(TextSpanMod(superScript = superScript), toSuperScriptText)
+	
+	fun subScriptText(subScript: Boolean = true, textToSuperScript: String): InkSpannableBuilder = subScriptText(subScript, listOf(textToSuperScript))
+	fun subScriptText(subScript: Boolean = true, vararg toSuperScriptText: String): InkSpannableBuilder = subScriptText(subScript, toSuperScriptText.toList())
+	fun subScriptText(subScript: Boolean = true, toSuperScriptTextResId: Int): InkSpannableBuilder = subScriptText(subScript, InkSpannableConfig.instance.getString(toSuperScriptTextResId))
+	fun subScriptText(subScript: Boolean = true, toSuperScriptResIds: Array<Int>): InkSpannableBuilder = subScriptText(subScript, toSuperScriptResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun subScriptText(subScript: Boolean = true, vararg toSuperScriptResIds: Int): InkSpannableBuilder = subScriptText(subScript, toSuperScriptResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun subScriptText(subScript: Boolean = true, toSuperScriptText: List<String>): InkSpannableBuilder = modText(TextSpanMod(subScript = subScript), toSuperScriptText)
+	
+	fun blurText(blur: Boolean = true, radius: Float? = null, style: BlurMaskFilter.Blur? = null, textToSuperScript: String): InkSpannableBuilder = blurText(blur, radius, style, listOf(textToSuperScript))
+	fun blurText(blur: Boolean = true, radius: Float? = null, style: BlurMaskFilter.Blur? = null, vararg toSuperScriptText: String): InkSpannableBuilder = blurText(blur, radius, style, toSuperScriptText.toList())
+	fun blurText(blur: Boolean = true, radius: Float? = null, style: BlurMaskFilter.Blur? = null, toSuperScriptTextResId: Int): InkSpannableBuilder = blurText(blur, radius, style, InkSpannableConfig.instance.getString(toSuperScriptTextResId))
+	fun blurText(blur: Boolean = true, radius: Float? = null, style: BlurMaskFilter.Blur? = null, toSuperScriptResIds: Array<Int>): InkSpannableBuilder = blurText(blur, radius, style, toSuperScriptResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun blurText(blur: Boolean = true, radius: Float? = null, style: BlurMaskFilter.Blur? = null, vararg toSuperScriptResIds: Int): InkSpannableBuilder = blurText(blur, radius, style, toSuperScriptResIds.map { InkSpannableConfig.instance.getString(it) })
+	fun blurText(blur: Boolean = true, radius: Float? = null, style: BlurMaskFilter.Blur? = null, toSuperScriptText: List<String>): InkSpannableBuilder = modText(TextSpanMod(blur = blur, blurRadius = radius, blurStyle = style), toSuperScriptText)
 	
 	fun underlineText(underline: Boolean = true, textToUnderline: String): InkSpannableBuilder = underlineText(underline, listOf(textToUnderline))
 	fun underlineText(underline: Boolean = true, vararg toUnderlineText: String): InkSpannableBuilder = underlineText(underline, toUnderlineText.toList())

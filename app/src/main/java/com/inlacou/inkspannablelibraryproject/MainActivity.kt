@@ -2,6 +2,7 @@ package com.inlacou.inkspannablelibraryproject
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.BlurMaskFilter
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -104,8 +105,10 @@ class MainActivity : AppCompatActivity() {
 						.build()
 			})
 			addView(RoundedBgTextView(context).apply {
-				text = InkSpannableBuilder("add drawable dynamically")
-						.addDrawable(R.drawable.space_invader, 16.dpToPx(), 16.dpToPx())
+				text = InkSpannableBuilder("")
+						.addTextBlur("blur text\n")
+						.addTextBlur("more blurred text\n")
+						.addTextBlur("more blurred text2\n")
 						.build()
 			})
 		}

@@ -1,10 +1,11 @@
-package com.inlacou.inkspannable
+package com.inlacou.inkspannable.spans
 
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.style.DynamicDrawableSpan
+import com.inlacou.inkspannable.InkSpannableConfig
 
 class ResDrawableSpan(
 		private val resId: Int,
@@ -30,9 +31,8 @@ class ResDrawableSpan(
 	}
 	
 	override fun getDrawable(): Drawable {
-		val aux = 0
 		val drawable = InkSpannableConfig.context!!.get()!!.getDrawableCompat(resId)
-		drawable.setBounds(0, aux, width ?: drawable.intrinsicWidth, aux+(height ?: drawable.intrinsicHeight))
+		drawable.setBounds(0, 0, width ?: drawable.intrinsicWidth,height ?: drawable.intrinsicHeight)
 		return drawable
 	}
 	

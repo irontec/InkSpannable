@@ -1,5 +1,6 @@
 package com.inlacou.inkspannable
 
+import android.graphics.BlurMaskFilter
 import android.graphics.drawable.Drawable
 import android.view.View
 
@@ -9,6 +10,11 @@ data class TextSpanMod(
 		val round: Boolean? = null,
 		val strike: Boolean? = null,
 		val superScript: Boolean? = null,
+		val subScript: Boolean? = null,
+		/** Needs android:hardwareAccelerated="false" on manifest */
+		val blur: Boolean? = null,
+		val blurRadius: Float? = null,
+		val blurStyle: BlurMaskFilter.Blur? = null,
 		val quoteColor: Int? = null,
 		val quoteStripeWidth: Int? = null,
 		val quoteGapWidth: Int? = null,

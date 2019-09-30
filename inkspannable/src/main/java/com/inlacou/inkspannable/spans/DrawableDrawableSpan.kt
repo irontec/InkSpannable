@@ -1,4 +1,4 @@
-package com.inlacou.inkspannable
+package com.inlacou.inkspannable.spans
 
 import android.graphics.drawable.Drawable
 import android.text.style.DynamicDrawableSpan
