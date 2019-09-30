@@ -57,6 +57,8 @@ class InkSpannableBuilder(private val allText: String) {
 	@RequiresApi(Build.VERSION_CODES.P) fun addBulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, string: String) = addTextMod(string, TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap, bulletRadius = bulletRadius))
 	fun addBulletParagraph(bulletColor: Int, bulletGap: Int? = null, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap))
 	fun addQuoteParagraph(quoteColor: Int, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(quoteColor = quoteColor))
+	fun addDrawable(resId: Int, width: Int? = null, height: Int? = null): InkSpannableBuilder = addTextMod("addDrawableByResId", TextSpanMod(drawableResId = resId, drawableWidth = width, drawableHeight = height))
+	fun addDrawable(drawable: Drawable, width: Int? = null, height: Int? = null): InkSpannableBuilder = addTextMod("addDrawableByDrawable", TextSpanMod(drawable = drawable, drawableWidth = width, drawableHeight = height))
 	
 	fun addTextMod(string: String, modifier: TextSpanMod): InkSpannableBuilder {
 		actions.add(Action(Type.ADD, modifier, listOf(string)))

@@ -103,6 +103,11 @@ class MainActivity : AppCompatActivity() {
 						.drawable(R.drawable.space_invader, 16.dpToPx(), 16.dpToPx(), "drawable")
 						.build()
 			})
+			addView(RoundedBgTextView(context).apply {
+				text = InkSpannableBuilder("add drawable dynamically")
+						.addDrawable(R.drawable.space_invader, 16.dpToPx(), 16.dpToPx())
+						.build()
+			})
 		}
 	}
 	
