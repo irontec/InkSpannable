@@ -32,6 +32,10 @@ class InkSpannableBuilder(private val allText: String) {
 	fun addTextSuperScript(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(superScript = true))
 	fun addTextRound(string: String) = addTextMod(string, TextSpanMod(round = true))
 	fun addTextRound(context: Context, resId: Int) = addTextMod(context.getString(resId), TextSpanMod(round = true))
+	fun addTextAbsoluteSize(string: String, size: Int, dip: Boolean) = addTextMod(string, TextSpanMod(absoluteSize = size, absoluteSizeDip = dip))
+	fun addTextAbsoluteSize(context: Context, resId: Int, size: Int, dip: Boolean) = addTextMod(context.getString(resId), TextSpanMod(absoluteSize = size, absoluteSizeDip = dip))
+	fun addTextRelativeSize(string: String, size: Float) = addTextMod(string, TextSpanMod(relativeSize = size))
+	fun addTextRelativeSize(context: Context, resId: Int, size: Float) = addTextMod(context.getString(resId), TextSpanMod(relativeSize = size))
 	fun addTextColor(string: String, color: Int) = addTextMod(string, TextSpanMod(color = color))
 	fun addTextColor(context: Context, resId: Int, color: Int) = addTextMod(context.getString(resId), TextSpanMod(color = color))
 	fun addTextBold(stringResId: Int): InkSpannableBuilder = addTextMod(InkSpannableConfig.instance.getString(stringResId), TextSpanMod(typeface = TextSpanMod.TextStyles.BOLD))
@@ -50,6 +54,9 @@ class InkSpannableBuilder(private val allText: String) {
 	fun addTextBoldClickable(string: String, onClick: ((item: View?) -> Any)): InkSpannableBuilder = addTextMod(string, TextSpanMod(typeface = TextSpanMod.TextStyles.BOLD, onClick = onClick))
 	fun addTextBoldClickable(context: Context, resId: Int, onClick: ((item: View?) -> Any)): InkSpannableBuilder = addTextMod(context.getString(resId), TextSpanMod(typeface = TextSpanMod.TextStyles.BOLD, onClick = onClick))
 	fun addBlank(): InkSpannableBuilder = addTextMod(" ", TextSpanMod())
+	@RequiresApi(Build.VERSION_CODES.P) fun addBulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, string: String) = addTextMod(string, TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap, bulletRadius = bulletRadius))
+	fun addBulletParagraph(bulletColor: Int, bulletGap: Int? = null, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap))
+	fun addQuoteParagraph(quoteColor: Int, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(quoteColor = quoteColor))
 	
 	fun addTextMod(string: String, modifier: TextSpanMod): InkSpannableBuilder {
 		actions.add(Action(Type.ADD, modifier, listOf(string)))
