@@ -58,6 +58,8 @@ class InkSpannableBuilder(private val allText: String) {
 	fun addBulletParagraph(bulletColor: Int, bulletGap: Int? = null, bulletRadius: Int? = null, string: String) = addTextMod(string, TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap, bulletRadius = bulletRadius))
 	fun addBulletParagraph(bulletColor: Int, bulletGap: Int? = null, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(bulletColor = bulletColor, bulletGap = bulletGap))
 	fun addQuoteParagraph(quoteColor: Int, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(quoteColor = quoteColor))
+	/** gap and stripe will only work on Build.VERSION_CODES.P and onward */
+	fun addQuoteParagraph(quoteColor: Int, gap: Int, stripe: Int, string: String): InkSpannableBuilder = addTextMod(string, TextSpanMod(quoteColor = quoteColor, quoteStripeWidth = stripe, quoteGapWidth = gap))
 	fun addDrawable(resId: Int, width: Int? = null, height: Int? = null): InkSpannableBuilder = addTextMod("addDrawableByResId", TextSpanMod(drawableResId = resId, drawableWidth = width, drawableHeight = height))
 	fun addDrawable(drawable: Drawable, width: Int? = null, height: Int? = null): InkSpannableBuilder = addTextMod("addDrawableByDrawable", TextSpanMod(drawable = drawable, drawableWidth = width, drawableHeight = height))
 	
@@ -160,6 +162,19 @@ class InkSpannableBuilder(private val allText: String) {
 	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, toChangeForDrawableResIds: Array<Int>): InkSpannableBuilder = drawable(drawable, width, height, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, vararg toChangeForDrawableResIds: Int): InkSpannableBuilder = drawable(drawable, width, height, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
 	fun drawable(drawable: Drawable, width: Int? = null, height: Int? = null, toChangeForDrawableText: List<String>): InkSpannableBuilder = modText(TextSpanMod(drawable = drawable, drawableWidth = width, drawableHeight = height), toChangeForDrawableText)
+	
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun quoteParagraph(quoteColor: Int, gap: Int, stripe: Int, textToChangeForDrawable: String): InkSpannableBuilder = quoteParagraph(quoteColor, gap, stripe, listOf(textToChangeForDrawable))
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun quoteParagraph(quoteColor: Int, gap: Int, stripe: Int, vararg toChangeForDrawableText: String): InkSpannableBuilder = quoteParagraph(quoteColor, gap, stripe, toChangeForDrawableText.toList())
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun quoteParagraph(quoteColor: Int, gap: Int, stripe: Int, toChangeForDrawableTextResId: Int): InkSpannableBuilder = quoteParagraph(quoteColor, gap, stripe, InkSpannableConfig.instance.getString(toChangeForDrawableTextResId))
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun quoteParagraph(quoteColor: Int, gap: Int, stripe: Int, toChangeForDrawableResIds: Array<Int>): InkSpannableBuilder = quoteParagraph(quoteColor, gap, stripe, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun quoteParagraph(quoteColor: Int, gap: Int, stripe: Int, vararg toChangeForDrawableResIds: Int): InkSpannableBuilder = quoteParagraph(quoteColor, gap, stripe, toChangeForDrawableResIds.map { InkSpannableConfig.instance.getString(it) })
+	@RequiresApi(Build.VERSION_CODES.P)
+	fun quoteParagraph(quoteColor: Int, gap: Int, stripe: Int, toChangeForDrawableText: List<String>): InkSpannableBuilder = modText(TextSpanMod(quoteColor = quoteColor, quoteGapWidth = gap, quoteStripeWidth = stripe), toChangeForDrawableText)
 	
 	fun quoteParagraph(quoteColor: Int, textToChangeForDrawable: String): InkSpannableBuilder = quoteParagraph(quoteColor, listOf(textToChangeForDrawable))
 	fun quoteParagraph(quoteColor: Int, vararg toChangeForDrawableText: String): InkSpannableBuilder = quoteParagraph(quoteColor, toChangeForDrawableText.toList())

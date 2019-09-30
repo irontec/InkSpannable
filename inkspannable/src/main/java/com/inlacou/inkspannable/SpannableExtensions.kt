@@ -55,7 +55,13 @@ fun Spannable.applyMod(modifier: TextSpanMod, from: Int = 0, to: Int = length): 
             applyBullet(color = it, from = from, to = to)
         }
     }
-    modifier.quoteColor?.let { applyQuote(color = it, from = from, to = to) }
+    modifier.quoteColor?.let {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.P && modifier.quoteGapWidth!=null && modifier.quoteStripeWidth!=null) {
+            applyQuote(color = it, gapWidth = modifier.quoteGapWidth, stripeWidth = modifier.quoteStripeWidth, from = from, to = to)
+        } else {
+            applyQuote(color = it, from = from, to = to)
+        }
+    }
     modifier.suggestions?.let { applySuggestions(it, from = from, to = to) }
     return this
 }
@@ -131,7 +137,6 @@ fun Spannable.applyQuote(color: Int, stripeWidth: Int, gapWidth: Int, from: Int 
 }
 
 fun Spannable.applyBullet(color: Int, gap: Int = 0, from: Int = 0, to: Int = length): Spannable {
-    Log.d("applyBullet", "gap: $gap")
     setSpan(BulletSpan(gap, color), from, to, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     return this
 }

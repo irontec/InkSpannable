@@ -10,6 +10,8 @@ data class TextSpanMod(
 		val strike: Boolean? = null,
 		val superScript: Boolean? = null,
 		val quoteColor: Int? = null,
+		val quoteStripeWidth: Int? = null,
+		val quoteGapWidth: Int? = null,
 		val bulletColor: Int? = null,
 		val bulletGap: Int? = null,
 		val bulletRadius: Int? = null,
