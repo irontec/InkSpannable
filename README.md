@@ -5,7 +5,7 @@ Better spannable creation.
 
 ## Configuration
 
-First of all you need to pass the Application context to the InkSpannableConfig:
+First of all you need to pass the Application context to the InkSpannableConfig (as a WeakReference, do not fear):
 
 ```kt
 class AppCtrl : Application() {
@@ -16,7 +16,7 @@ class AppCtrl : Application() {
 		// initialize the singleton
 		instance = this
 		
-		InkSpannableConfig.context = this
+		InkSpannableConfig.context = WeakReference(this)
 	}
 
 	companion object {
